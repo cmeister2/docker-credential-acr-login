@@ -59,7 +59,13 @@ async fn main() -> StdResult<()> {
         .init()?;
 
     match cli.operation {
-        Operation::Get => get_docker_credential(&cli).await?,
+        // For gets, get any credentials for the given registry.
+        Operation::Get => {
+            let creds = get_docker_credential(&cli).await?;
+
+            // Write the output to stdout
+            serde_json::to_writer(std::io::stdout(), &creds)?;
+        }
 
         // For other operations, do nothing.
         _ => info!("{} is a read-only provider", crate_name!()),
@@ -68,7 +74,7 @@ async fn main() -> StdResult<()> {
     Ok(())
 }
 
-async fn get_docker_credential(cli: &Cli) -> StdResult<()> {
+async fn get_docker_credential(cli: &Cli) -> StdResult<serde_json::Value> {
     // Expecting the registry of the ACR as input from stdin.
     let mut registry = String::new();
     std::io::stdin().read_to_string(&mut registry)?;
@@ -81,7 +87,9 @@ async fn get_docker_credential(cli: &Cli) -> StdResult<()> {
     if !registry.ends_with(ACR_DOMAIN) {
         // Normal operation when used as a credStore.
         info!("{} not handling registry: {}", crate_name!(), registry);
-        return Ok(());
+
+        // Return an empty JSON dictionary
+        return Ok(json!({}));
     }
 
     // Need to connect to the repository's OAuth endpoint to exchange the token we just got.
@@ -122,9 +130,6 @@ async fn get_docker_credential(cli: &Cli) -> StdResult<()> {
     });
     trace!("Credentials: {:?}", creds);
 
-    // Write the credentials to stdout
-    serde_json::to_writer(std::io::stdout(), &creds)?;
-
     // If we get here we succeeded!
-    Ok(())
+    Ok(creds)
 }
