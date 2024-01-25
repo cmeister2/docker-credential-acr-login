@@ -21,7 +21,7 @@ Next, in `$HOME/.docker/config.json`, either add:
 to handle requests for all Azure registries, or
 ```json
 {
-    "credsHelper": {
+    "credHelpers": {
         "<registry>.azurecr.io": "acr-login"
     }
 }
