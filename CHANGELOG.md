@@ -18,6 +18,12 @@ Status: In development
 
 ### Fixed
 
+## [0.1.2] - 2025-11-12
+
+### Fixed
+
+- Take dependency updates including `azure_*` v`0.30.0`
+
 ## [0.1.1] - 2024-01-25
 
 ### Fixed
@@ -28,6 +34,7 @@ Status: In development
 ### Added
 - Initial commit
 
-[unreleased]: https://github.com/cmeister2/docker-credential-acr-login/compare/0.1.1...HEAD
+[unreleased]: https://github.com/cmeister2/docker-credential-acr-login/compare/0.1.2...HEAD
+[0.1.1]: https://github.com/cmeister2/docker-credential-acr-login/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/cmeister2/docker-credential-acr-login/compare/0.1.0...0.1.1
 [0.1.0]: https://github.com/cmeister2/docker-credential-acr-login/tree/0.1.0

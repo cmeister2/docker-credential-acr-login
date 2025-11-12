@@ -1,8 +1,8 @@
 use std::io::Read;
 
-use azure_core::auth::TokenCredential;
-use azure_identity::DefaultAzureCredential;
-use clap::{crate_name, Parser};
+use azure_core::credentials::TokenCredential;
+use azure_identity::DeveloperToolsCredential;
+use clap::{Parser, crate_name};
 use log::{info, trace};
 use serde::Deserialize;
 use serde_json::json;
@@ -96,8 +96,10 @@ async fn get_docker_credential(cli: &Cli) -> StdResult<serde_json::Value> {
     let url = Url::parse(&format!("https://{}/oauth2/exchange", registry))?;
 
     // Time to obtain some credentials and variables!
-    let credential = DefaultAzureCredential::default();
-    let token_response = credential.get_token("https://management.azure.com").await?;
+    let credential = DeveloperToolsCredential::new(None)?;
+    let token_response = credential
+        .get_token(&["https://management.azure.com/.default"], None)
+        .await?;
     let tenant = &cli.azure_tenant_id;
 
     // Set up the parameters for the post to the OAuth endpoint as per
