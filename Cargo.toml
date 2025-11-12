@@ -1,6 +1,6 @@
 [package]
 name = "docker-credential-acr-login"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2024"
 authors = ["Max Dymond <cmeister2@gmail.com>"]
 description = "A docker credential helper for Azure Container Registries (ACRs)"
