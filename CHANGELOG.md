@@ -18,6 +18,8 @@ Status: In development
 
 ### Fixed
 
+- Take dependency updates including `azure_*` v`0.30.0`
+
 ## [0.1.1] - 2024-01-25
 
 ### Fixed

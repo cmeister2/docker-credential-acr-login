@@ -54,3 +54,7 @@ Digest: sha256:c494835919a916a1b1248eebe11815ada264e7b6b29f8784060c5f39b20b4747
 Status: Downloaded newer image for dockercredentialacrlogin.azurecr.io/python:3.8-alpine
 dockercredentialacrlogin.azurecr.io/python:3.8-alpine
 ```
+
+## Minimum supported Rust version (MSRV)
+
+This project's current MSRV is **1.85.1**.
