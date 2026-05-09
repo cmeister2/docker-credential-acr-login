@@ -348,7 +348,7 @@ dependencies = [
 
 [[package]]
 name = "docker-credential-acr-login"
-version = "0.1.2"
+version = "0.0.0"
 dependencies = [
  "anyhow",
  "azure_core",
