@@ -23,7 +23,7 @@ jobs:
       new-release: ${{ steps.release.outputs.new_release }}
       version: ${{ steps.build-version.outputs.version }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
         with:
           fetch-depth: 0
       - uses: actions/setup-node@v4
@@ -52,7 +52,7 @@ jobs:
           - stable
           - 1.85.1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Set version
         run: python3 prepare.py "${{ needs.check-release.outputs.version }}"
       - uses: dtolnay/rust-toolchain@master
@@ -70,7 +70,7 @@ jobs:
           - stable
           - 1.85.1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Set version
         run: python3 prepare.py "${{ needs.check-release.outputs.version }}"
       - uses: dtolnay/rust-toolchain@master
@@ -88,7 +88,7 @@ jobs:
           - stable
           - 1.85.1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Set version
         run: python3 prepare.py "${{ needs.check-release.outputs.version }}"
       - uses: dtolnay/rust-toolchain@master
@@ -107,7 +107,7 @@ jobs:
           - stable
           - 1.85.1
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Set version
         run: python3 prepare.py "${{ needs.check-release.outputs.version }}"
       - uses: dtolnay/rust-toolchain@master
@@ -125,7 +125,7 @@ jobs:
         rust:
           - stable
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Set version
         run: python3 prepare.py "${{ needs.check-release.outputs.version }}"
       - uses: dtolnay/rust-toolchain@master
@@ -149,7 +149,7 @@ jobs:
       - clippy
       - tarpaulin
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
       - name: Set version
         run: python3 prepare.py "${{ needs.check-release.outputs.version }}"
       - uses: dtolnay/rust-toolchain@stable
