@@ -113,11 +113,19 @@ async fn get_docker_credential(cli: &Cli) -> StdResult<serde_json::Value> {
     ];
     trace!("Params: {:?}", params);
 
+    let form_body = url::form_urlencoded::Serializer::new(String::new())
+        .extend_pairs(params)
+        .finish();
+
     // Send the request to the endpoint in order to get the ACR refresh token.
     let client = reqwest::Client::new();
     let response = client
         .post(url)
-        .form(&params)
+        .header(
+            reqwest::header::CONTENT_TYPE,
+            "application/x-www-form-urlencoded",
+        )
+        .body(form_body)
         .send()
         .await?
         .error_for_status()?
