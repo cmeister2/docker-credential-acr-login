@@ -93,7 +93,7 @@ async fn get_docker_credential(cli: &Cli) -> StdResult<serde_json::Value> {
     }
 
     // Need to connect to the repository's OAuth endpoint to exchange the token we just got.
-    let url = Url::parse(&format!("https://{}/oauth2/exchange", registry))?;
+    let url = Url::parse(&format!("https://{registry}/oauth2/exchange"))?;
 
     // Time to obtain some credentials and variables!
     let credential = DeveloperToolsCredential::new(None)?;
@@ -111,13 +111,21 @@ async fn get_docker_credential(cli: &Cli) -> StdResult<serde_json::Value> {
         ("tenant", tenant.as_str()),
         ("access_token", token_response.token.secret()),
     ];
-    trace!("Params: {:?}", params);
+    trace!("Params: {params:?}");
+
+    let form_body = url::form_urlencoded::Serializer::new(String::new())
+        .extend_pairs(params)
+        .finish();
 
     // Send the request to the endpoint in order to get the ACR refresh token.
     let client = reqwest::Client::new();
     let response = client
         .post(url)
-        .form(&params)
+        .header(
+            reqwest::header::CONTENT_TYPE,
+            "application/x-www-form-urlencoded",
+        )
+        .body(form_body)
         .send()
         .await?
         .error_for_status()?
@@ -130,7 +138,7 @@ async fn get_docker_credential(cli: &Cli) -> StdResult<serde_json::Value> {
         "Username": ACR_USERNAME,
         "Secret": response.refresh_token
     });
-    trace!("Credentials: {:?}", creds);
+    trace!("Credentials: {creds:?}");
 
     // If we get here we succeeded!
     Ok(creds)
