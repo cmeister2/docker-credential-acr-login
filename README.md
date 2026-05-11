@@ -57,4 +57,4 @@ dockercredentialacrlogin.azurecr.io/python:3.8-alpine
 
 ## Minimum supported Rust version (MSRV)
 
-This project's current MSRV is **1.85.1**.
+This project's current MSRV is **1.88.0**.
