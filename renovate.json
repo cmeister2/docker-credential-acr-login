@@ -6,5 +6,11 @@
     ":assignAndReview(cmeister2)",
     ":automergeAll"
   ],
-  "semanticCommits": "enabled"
+  "semanticCommits": "enabled",
+  "packageRules": [
+    {
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions"
+    }
+  ]
 }
