@@ -1,7 +1,7 @@
 use std::io::Read;
 
 use azure_core::credentials::TokenCredential;
-use azure_identity::DeveloperToolsCredential;
+use azure_identity::{AzureCliCredential, AzureCliCredentialOptions};
 use clap::{Parser, crate_name};
 use log::{info, trace};
 use serde::Deserialize;
@@ -95,12 +95,18 @@ async fn get_docker_credential(cli: &Cli) -> StdResult<serde_json::Value> {
     // Need to connect to the repository's OAuth endpoint to exchange the token we just got.
     let url = Url::parse(&format!("https://{registry}/oauth2/exchange"))?;
 
-    // Time to obtain some credentials and variables!
-    let credential = DeveloperToolsCredential::new(None)?;
+    // Obtain an Azure access token scoped to management.azure.com for this
+    // specific tenant. Using AzureCliCredential with tenant_id ensures
+    // `az account get-access-token --tenant` is called, so the active
+    // subscription does not need to match the ACR's tenant.
+    let tenant = &cli.azure_tenant_id;
+    let credential = AzureCliCredential::new(Some(AzureCliCredentialOptions {
+        tenant_id: Some(tenant.clone()),
+        ..Default::default()
+    }))?;
     let token_response = credential
         .get_token(&["https://management.azure.com/.default"], None)
         .await?;
-    let tenant = &cli.azure_tenant_id;
 
     // Set up the parameters for the post to the OAuth endpoint as per
     // https://github.com/Azure/acr/blob/main/docs/AAD-OAuth.md#calling-post-oauth2exchange-to-get-an-acr-refresh-token
