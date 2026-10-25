@@ -9,6 +9,11 @@
   "semanticCommits": "enabled",
   "packageRules": [
     {
+      "description": "Work around npm/cli#9800 when regenerating lockfiles with bundled dependencies",
+      "matchManagers": ["npm"],
+      "skipInstalls": false
+    },
+    {
       "matchManagers": ["github-actions"],
       "groupName": "github actions"
     }
